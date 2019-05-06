@@ -30,6 +30,7 @@ __published:	// IDE-managed Components
 	TEdit *EndClusterEdit2;
 	TLabel *LabelStartCluster;
 	TLabel *LabelEndCluster;
+	TMemo *Memo1;
 	void __fastcall ScanButton1Click(TObject *Sender);
 	void __fastcall StopButton2Click(TObject *Sender);
 

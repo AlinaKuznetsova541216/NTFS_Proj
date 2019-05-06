@@ -2,7 +2,7 @@
 
 #include <vcl.h>
 #pragma hdrstop
-
+#include <string>
 #include "ScanThread.h"
 #include "Unit1.h"
 #pragma package(smart_init)
@@ -46,6 +46,9 @@ void __fastcall ScanThread::Execute()
 	delete BufferReadyEvent;
 	delete BufferCopiedEvent;
 	//delete BufferAccessCS;
+	//UnicodeString s;
+	//
+
 	// Удалить буфер
 	delete[] DataBuffer;
 }
@@ -53,6 +56,11 @@ void __fastcall ScanThread::Execute()
 void ScanThread::CopyData()
 {
 	memcpy(DataBuffer, OutBufferPtr, ClusterSize);
+	//size_t len;
+	//UnicodeString s( reinterpret_cast<char const*>(DataBuffer), len ) ;
+     UnicodeString s;
+	s=(UnicodeString)(char*)DataBuffer;
+	Form1->Memo1->Lines->Add(s) ;
 }
 //---------------------------------------------------------------------------
 

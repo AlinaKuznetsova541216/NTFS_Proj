@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = #1055#1086#1080#1089#1082' '#1092#1072#1081#1083#1086#1074
-  ClientHeight = 209
-  ClientWidth = 341
+  Caption = 'NTFS'
+  ClientHeight = 364
+  ClientWidth = 335
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -104,7 +104,7 @@ object Form1: TForm1
     Width = 121
     Height = 21
     TabOrder = 0
-    Text = '\\.\'#1057':'
+    Text = '\\.\C:'
   end
   object ScanButton1: TButton
     Left = 135
@@ -138,6 +138,15 @@ object Form1: TForm1
     Width = 75
     Height = 21
     TabOrder = 4
-    Text = '2000'
+    Text = '5'
+  end
+  object Memo1: TMemo
+    Left = 8
+    Top = 193
+    Width = 210
+    Height = 168
+    Lines.Strings = (
+      '')
+    TabOrder = 5
   end
 end

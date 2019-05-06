@@ -23,13 +23,11 @@ private:
 	BYTE *DataBuffer;
 	void CopyData();
 	void __fastcall CompleteSearch();
-   //	std::vector<std::string> signatures;
 
 protected:
 	void __fastcall Execute();
 public:
 	__fastcall ScanThread(BYTE *dataBufferPtr, int clusterSize, bool CreateSuspended, int startcluster);
-	//std::string SignatureType;
 
 	// События, используемые для синхронизации
 	TEvent *BufferReadyEvent;

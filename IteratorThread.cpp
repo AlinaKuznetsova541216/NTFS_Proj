@@ -32,7 +32,7 @@ __fastcall IteratorThread::IteratorThread(WCHAR *filePath, bool CreateSuspended,
 			StartCluster = EndCluster;
 			EndCluster = tmp;
 		}
-		Form1->InformationLabel4->Caption = "Идет поиск...";
+		Form1->InformationLabel4->Caption = "Идет считывание заданных кластеров...";
 		Form1->BytesPerSecLabel1->Caption = myClassPtr->GetBytesPerSector();
 		Form1->SecPerClustLabel2->Caption = myClassPtr->GetSectorsPerCluster();
 		Form1->BytesPerClustLabel3->Caption = myClassPtr->GetBytesPerCluster();
