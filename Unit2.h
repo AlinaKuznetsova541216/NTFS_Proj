@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 
-#ifndef Unit1H
-#define Unit1H
+#ifndef Unit2H
+#define Unit2H
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
@@ -9,13 +9,14 @@
 #include <Vcl.Forms.hpp>
 #include "VirtualTrees.hpp"
 //---------------------------------------------------------------------------
-#include <windows.h>
-#include <Vcl.ExtCtrls.hpp>
-//-#include "D:\VirtualTreeViewV6.6.0\Source\VirtualTrees.hpp"
-//---------------------------------------------------------------------------
+typedef struct
+{
+	   int Id;
+	   __int64 NumCluster;
+	   std::string Type;
+} NodeOfStringTree;
 
-
-class TForm1 : public TForm
+class TForm2 : public TForm
 {
 __published:	// IDE-managed Components
 	TLabel *BytesPerSecLabel1;
@@ -44,11 +45,14 @@ __published:	// IDE-managed Components
 	TRadioButton *exFatRadioButton2;
 	void __fastcall ScanButton1Click(TObject *Sender);
 	void __fastcall StopButton2Click(TObject *Sender);
+	void __fastcall VirtualStringTree2GetText(TBaseVirtualTree *Sender, PVirtualNode Node,
+          TColumnIndex Column, TVSTTextType TextType, UnicodeString &CellText);
+
 private:	// User declarations
 public:		// User declarations
-	__fastcall TForm1(TComponent* Owner);
+	__fastcall TForm2(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TForm1 *Form1;
+extern PACKAGE TForm2 *Form2;
 //---------------------------------------------------------------------------
 #endif

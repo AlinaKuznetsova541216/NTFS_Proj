@@ -2,22 +2,25 @@
 
 #ifndef IteratorDecoratorH
 #define IteratorDecoratorH
-#include "Iterator.h"
+//---------------------------------------------------------------------------
 #include <string>
 #include <windows.h>
+#include "IteratorOfClusters.h"
 //---------------------------------------------------------------------------
-class IteratorDecorator : public Iterator<BYTE *>
+class IteratorDecorator : public IteratorOfClusters
 {
 protected:
-	Iterator<BYTE> * Iterat;
-	IteratorDecorator() {}
+	   IteratorOfClusters * Iterat;
+	   IteratorDecorator() {}
 public:
-	IteratorDecorator(Iterator<BYTE> * it) {Iterat = it;}
-	virtual ~IteratorDecorator(){delete Iterat;}
-	virtual void First(){Iterat->First();}
-	virtual void Next(){Iterat->Next();}
-	virtual bool IsDone(){return Iterat->IsDone();}
-	virtual BYTE * GetCurrent(){return (unsigned char *)Iterat->GetCurrent();}
-	virtual void GetCurrent(BYTE **dataBuffer){Iterat->GetCurrent(*dataBuffer);}
+	   IteratorDecorator(IteratorOfClusters * it) {Iterat = it;}
+	   virtual ~IteratorDecorator(){delete Iterat;}
+	   virtual void First(){Iterat->First();}
+	   virtual void Next(){Iterat->Next();}
+	   virtual bool IsDone(){return Iterat->IsDone();}
+	   virtual ClusterDisk GetCurrent(){return Iterat->GetCurrent();}
+	   virtual void GetCurrent(ClusterDisk *dataBuffer){Iterat->GetCurrent(dataBuffer);}
+	   virtual ULONGLONG GetNumCurrentCluster(){return Iterat->GetNumCurrentCluster();}
+
 };
 #endif

@@ -1,67 +1,61 @@
-п»ї//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+
 #ifndef NTFSClassH
 #define NTFSClassH
+//---------------------------------------------------------------------------
 #include <string>
 #include <windows.h>
+#include "FSClass.h"
+#include "IteratorOfClusters.h"
+#include "IteratorOfClustersNTFS.h"
 //---------------------------------------------------------------------------
 #pragma pack(push, 1)
 typedef struct
 {
-/*0x00*/BYTE  jump[3];			        /* РљРѕРјР°РЅРґР° РїРµСЂРµС…РѕРґР° РЅР° Р·Р°РіСЂСѓР·РѕС‡РЅС‹Р№ РєРѕРґ */
-/*0x03*/char OemId[8];	         	/* СЃРёРіРЅР°С‚СѓСЂР° "NTFS    " */
-/*0x0b*/WORD BytesPerSector;	     	/* Р Р°Р·РјРµСЂ СЃРµРєС‚РѕСЂР° РІ Р±Р°Р№С‚Р°С… */
-/*0x0d*/BYTE SectorsPerCluster;	        /* РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРµРєС‚РѕСЂРѕРІ РІ РєР»Р°СЃС‚РµСЂРµ*/
-/*0x0e*/WORD ReservedSectors;	     	/* Р”РѕР»Р¶РЅРѕ СЂР°РІРЅСЏС‚СЊСЃСЏ РЅСѓР»СЋ */
-/*0x10*/BYTE Fats;			         	/* Р”РѕР»Р¶РЅРѕ СЂР°РІРЅСЏС‚СЊСЃСЏ РЅСѓР»СЋ*/
-/*0x11*/WORD RootEntries;		     	/* Р”РѕР»Р¶РЅРѕ СЂР°РІРЅСЏС‚СЊСЃСЏ РЅСѓР»СЋ */
-/*0x13*/WORD Sectors;			        /* Р”РѕР»Р¶РЅРѕ СЂР°РІРЅСЏС‚СЊСЃСЏ РЅСѓР»СЋ */
-/*0x15*/BYTE MediaType;		            /* РўРёРї РЅРѕСЃРёС‚РµР»СЏ, 0xf8 = hard disk */
-/*0x16*/WORD SectorsPerFat;		        /* Р”РѕР»Р¶РЅРѕ СЂР°РІРЅСЏС‚СЊСЃСЏ РЅСѓР»СЋ */
-/*0x18*/WORD SectorsPerTrack;	     	/* РќРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ*/
-/*0x1a*/WORD Heads;			         	/* РќРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ */
-/*0x1c*/DWORD HiddenSectors;		    /* РќРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ */
-/*0x20*/DWORD LargeSectors;		        /* Р”РѕР»Р¶РЅРѕ СЂР°РІРЅСЏС‚СЊСЃСЏ РЅСѓР»СЋ */
-/*0x24*/BYTE PhysicalDrive;		        /* РќРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ */
-/*0x25*/BYTE CurrentHead;		        /* РќРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ*/
-/*0x26*/BYTE ExtendedBootSignature;     /* РќРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ */
-/*0x27*/BYTE Reserved2;			        /* РќРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ */
-/*0x28*/ULONGLONG NumberOfSectors;      /* Р§РёСЃР»Рѕ СЃРµРєС‚РѕСЂРѕРІ РІ С‚РѕРјРµ. */
-/*0x30*/ULONGLONG MftLcn;	            /* СЃС‚Р°СЂС‚РѕРІС‹Р№ РєР»Р°СЃС‚РµСЂ MFT. */
-/*0x38*/ULONGLONG MftMirrLcn;           /* РЎС‚Р°СЂС‚РѕРІС‹Р№ РєР»Р°СЃС‚РµСЂ РєРѕРїРёРё MFT */
-/*0x40*/BYTE ClustersPerMftRecord;	    /* СЂР°Р·РјРµСЂ MFT Р·Р°РїРёСЃРё РІ РєР»Р°СЃС‚РµСЂР°С…. */
-/*0x41*/BYTE Reserved0[3];		        /* Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅРѕ */
-/*0x44*/BYTE ClustersPerIndexRecord;    /* Р Р°Р·РјРµСЂ РёРЅРґРµРєСЃРЅРѕР№ Р·Р°РїРёСЃРё РІ РєР»Р°СЃС‚РµСЂР°С…. */
-/*0x45*/BYTE Reserved1[3];		        /* Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅРѕ */
-/*0x48*/ULONGLONG VolumeSerialNumber;   /* СѓРЅРёРєР°Р»СЊРЅС‹Р№ СЃРµСЂРёР№РЅС‹Р№ РЅРѕРјРµСЂ С‚РѕРјР° */
-/*0x50*/DWORD Checksum;			        /* РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ */
-/*0x54*/BYTE Bootstrap[426];		    /* Р·Р°РіСЂСѓР·РѕС‡РЅС‹Р№ РєРѕРґ */
-/*0x1fe*/WORD EndOfSectorMarker;	    /* РєРѕРЅРµС† Р·Р°РіСЂСѓР·РѕС‡РЅРѕРіРѕ СЃРµРєС‚РѕСЂР°, СЃРёРіРЅР°С‚СѓСЂР° 0xaa55 */
+/*0x00*/BYTE  jump[3];                         /* Команда перехода на загрузоый код */
+/*0x03*/char OemId[8];                 /* сигнатура "NTFS    " */
+/*0x0b*/WORD BytesPerSector;           /* Размер сектора в байтах */
+/*0x0d*/BYTE SectorsPerCluster;                /* Количество секторов в класте*/
+/*0x0e*/WORD ReservedSectors;          /* Должно равняться нулю */
+/*0x10*/BYTE Fats;                                     /* Должно равняться ну*/
+/*0x11*/WORD RootEntries;                      /* Должно равняться нулю */
+/*0x13*/WORD Sectors;                          /* Должно равняться нулю */
+/*0x15*/BYTE MediaType;                            /* Тип носителя, 0xf8 = ha disk */
+/*0x16*/WORD SectorsPerFat;                    /* Должно равняться нулю */
+/*0x18*/WORD SectorsPerTrack;          /* Не используются*/
+/*0x1a*/WORD Heads;                                    /* Не используются */
+/*0x1c*/DWORD HiddenSectors;               /* Не используются */
+/*0x20*/DWORD LargeSectors;                    /* Должно равняться нулю */
+/*0x24*/BYTE PhysicalDrive;                    /* Не используется */
+/*0x25*/BYTE CurrentHead;                      /* Не используется*/
+/*0x26*/BYTE ExtendedBootSignature;     /* Не используется */
+/*0x27*/BYTE Reserved2;                                /* Не используется */
+/*0x28*/ULONGLONG NumberOfSectors;      /* Число секторов в томе. */
+/*0x30*/ULONGLONG MftLcn;                  /* стартовый кластер MFT. */
+/*0x38*/ULONGLONG MftMirrLcn;           /* Стартовый кластер копии MFT */
+/*0x40*/BYTE ClustersPerMftRecord;         /* размер MFT записи в кластерах.
+/*0x41*/BYTE Reserved0[3];                     /* зарезервировано */
+/*0x44*/BYTE ClustersPerIndexRecord;    /* Размер индексной записи в кластера */
+/*0x45*/BYTE Reserved1[3];                     /* зарезервировано */
+/*0x48*/ULONGLONG VolumeSerialNumber;   /* уникальный серийный номер тома */
+/*0x50*/DWORD Checksum;                                /* не используется */
+/*0x54*/BYTE Bootstrap[426];               /* загрузочный код */
+/*0x1fe*/WORD EndOfSectorMarker;           /* конец загрузочного сектора, сигтура 0xaa55 */
 } NTFS_BootRecord;
 #pragma pack(pop)
-class NTFS_FileSystemClass
+class NTFS_FileSystemClass : public FSClass
 {
 protected:
-	HANDLE FileHandle;
-	std::string OemId;
-	WORD BytesPerSector;
-	BYTE SectorsPerCluster;
-	ULONGLONG NumberOfSectors;
-	DWORD BytesPerCluster;  //Р§РёСЃР»Рѕ Р±Р°Р№С‚ РІ РєР»Р°СЃС‚РµСЂРµ (СЂР°СЃСЃС‡РёС‚Р°РµРј)
-	WORD EndOfSectorMarker;
-	ULONGLONG NumberOfClusters; //РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РєР»Р°СЃС‚РµСЂРѕРІ (СЂР°СЃСЃС‡РёС‚Р°РµРј)
+	   std::string OemId;
+	   WORD EndOfSectorMarker;
+	   //DWORD StartSector;
 public:
-	NTFS_FileSystemClass();
-	bool Open(WCHAR *fileName);
-	std::string GetOemId();
-	WORD GetBytesPerSector();
-	BYTE GetSectorsPerCluster();
-	ULONGLONG GetNumberOfSectors();
-	ULONGLONG GetNumberOfClusters();
-	DWORD GetBytesPerCluster();
-	WORD GetEndOfSectorMarker();
-	bool SetNTFSAtributes();  //РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІСЃРµ Р°С‚СЂРёР±СѓС‚С‹
-	bool ReadClusters(ULONGLONG StartCluster, DWORD numberOfClusters, BYTE *outBuffer);
-	void Close();
-	std::string FileSystemStatus;
+	   NTFS_FileSystemClass();
+	   virtual ~NTFS_FileSystemClass();
+	   std::string GetOemId();
+	   WORD GetEndOfSectorMarker();
+	   bool SetAtributes();  //Устанавливаем все атрибуты
+	  IteratorOfClusters *GetIteratorOfClusters();
 };
+
 #endif
